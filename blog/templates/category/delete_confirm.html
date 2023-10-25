@@ -1,0 +1,6 @@
+<h3>Are You Want To Delete ? {{category.name}}</h3>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'home' %}">Cancel</a>
+</form>

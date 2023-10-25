@@ -1,0 +1,62 @@
+<aside class="col-lg-4">
+
+  
+    <!-- Search -->
+<div class="widget">
+<h5 class="widget-title"><span>Search</span></h5>
+<form method="get" class="widget-search" action="{% url 'search_post' %}">
+    <input type="text" name="title" placeholder="Search by title" >
+    <button type="submit"><i class="ti-search"></i>
+</button>
+</form>
+</div>
+<!-- categories -->
+<div class="widget">
+<h5 class="widget-title"><span>Categories</span></h5>
+<ul class="list-unstyled widget-list">
+
+
+
+{% for category in categories %}
+<li><a href="{% url 'post_based_on_category' category %}" class="d-flex">{{category.name}} 
+<small class="ml-auto">(1)</small></a>
+{% if request.user.is_authenticated%}
+<a href="{%url 'edit_category' category.name %}"> Edit </a>
+<a href="{%url 'delete_category' category.name %}"> Delete </a>
+{%endif%}
+</li>
+
+{% endfor %}
+</ul>
+</div>
+
+<!-- tags -->
+<div class="widget">
+<h5 class="widget-title"><span>Tags</span></h5>
+<ul class="list-inline widget-list-inline">
+
+{% for tag in tags %}
+<li class="list-inline-item"><a href="{% url 'post_based_on_tag' tag %}"> {{tag.name}} </a></li>
+{% endfor %}
+
+</ul>
+</div>
+
+<!-- pages -->
+<div class="widget">
+    <h5 class="widget-title"><span>Pages</span></h5>
+    <ul class="list-unstyled widget-list">
+    
+    {% for page in pages %}
+
+    <li><a href="{% url 'page_content' page %}" class="d-flex">{{page.title}}
+        <small class="ml-auto">(1)</small></a>
+        </li>
+
+
+    
+    {% endfor %}
+    
+    </ul>
+    </div>
+</aside>

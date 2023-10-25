@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<!-- এখানে কনটেন্ট পরিবর্তনের কোড থাকবে -->
+<div class="col-lg-12  mb-5 mb-lg-0">
+     {{page.content|safe}}
+
+     
+</div>
+
+{% endblock %}
+
+{%block extrajs %}
+
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.1/tinymce.min.js"></script>
+<script>
+    tinymce.init({selector:'textarea'});
+</script>  {% endcomment %}
+
+{% endblock %}

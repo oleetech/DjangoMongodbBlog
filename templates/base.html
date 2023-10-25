@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        
+     
+        <!-- mobile responsive meta -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+        <meta name="description" content="This is meta description">
+        <meta name="author" content="Themefisher">
+      
+        <!-- theme meta -->
+        <meta name="theme-name" content="logbook" />
+     
+        <!-- plugins -->
+        <link rel="stylesheet" href="{% static 'plugins/bootstrap/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:600%7cOpen&#43;Sans&amp;display=swap" media="screen">
+     
+        <link rel="stylesheet" href="{% static 'plugins/themify-icons/themify-icons.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+     
+        <!-- Main Stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     
+        <!--Favicon-->
+        <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+        <link rel="icon" href="{% static 'images/favicon.png' %}" type="image/x-icon">
+        <title>{% if title %} {{title}} {% else %} Blog {% endif %}</title>
+    </head>
+    <body>
+<!-- navigation -->
+<!-- এখানে কনটেন্ট পরিবর্তনের কোড থাকবে -->
+{% if messages %}
+    <div class="alert alert-dismissible">
+        {% for message in messages %}
+            <div {% if message.tags == 'success' %}class="alert alert-success"{% endif %} {% if message.tags == 'error' %}class="alert alert-danger"{% endif %}>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+<header class="sticky-top bg-white border-bottom border-default">
+    <div class="container">
+ 
+       <nav class="navbar navbar-expand-lg navbar-white">
+          <a class="navbar-brand" href="{% url 'home' %}">
+             <img class="img-fluid" width="150px" src="{% static '/images/logo.jpg' %}"  alt="LogBook">
+          </a>
+          <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+             <i class="ti-menu"></i>
+          </button>
+ 
+          <div class="collapse navbar-collapse text-center" id="navigation">
+             <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                   <a class="nav-link" href="{% url 'home' %}" >
+                      home 
+                   </a>
+
+                </li>
+
+                <li class="nav-item dropdown">
+                   <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                      aria-expanded="false">Pages <i class="ti-angle-down ml-1"></i>
+                   </a>
+                   <div class="dropdown-menu">
+                     {% for page in pages %}
+                      <a class="dropdown-item" href="{%url 'page_content' page.title %}">{{page.title}}</a>
+         
+                      {%endfor%}
+                   </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                     aria-expanded="false">Front Admin <i class="ti-angle-down ml-1"></i>
+                  </a>
+                  {% if request.user.is_authenticated%}
+                  <div class="dropdown-menu">
+                     <a class="dropdown-item" href="{%url 'create_category' %}">Create Category </a>
+                     <a class="dropdown-item" href="{%url 'create_tags' %}">Create Tags  </a>
+                     <a class="dropdown-item" href="{%url 'create_post' %}">Create Posts </a>
+                     <a class="dropdown-item" href="{%url 'create_social_link' %}">Create Social Link </a>                     
+        
+                    
+                  </div>
+                  {% endif %}
+               </li>
+             </ul>
+
+             <!-- search -->
+             <div class="search px-4">
+                <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+                <div class="search-wrapper">
+                   <form method="get" action="{% url 'search_post' %}" class="h-100">
+                      <input class="search-box pl-4" id="search-query" name="title" type="search" placeholder="Type &amp; Hit Enter...">
+                   </form>
+                   <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+                </div>
+             </div>
+ 
+          </div>
+       </nav>
+    </div>
+ </header>
+ <!-- /navigation -->
+
+
+
+      
+<section class="section">
+	<div class="container">
+		<div class="row">
+            {% block content %}
+
+            {% endblock %}
+
+</div>
+</div>
+</section>
+
+       
+   <footer class="section-sm pb-0 border-top border-default">
+      <div class="container">
+         <div class="row justify-content-between">
+            <div class="col-md-3 mb-4">
+               <a class="mb-4 d-block" href="{% url 'home' %}">
+                  <img class="img-fluid" width="150px" src="{% static '/images/logo.jpg' %}" alt="LogBook">
+               </a>
+               <p>"Welcome to 'Rebel'  Your Ultimate Source for Business Intelligence Solutions! We specialize in cutting-edge web-based software that automates your business's data processes, transforming raw data into actionable insights. Join us to stay updated on the latest trends in business intelligence, data analytics, and learn how our software can supercharge your decision-making processes."
+
+               </p> 
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-6 mb-4">
+               <h6 class="mb-4">Quick Links</h6>
+               <ul class="list-unstyled footer-list">
+                  {% for page in pages %}
+                  <li><a href="{% url 'page_content' page %}">{{page.title}}</a></li>
+
+               
+                  {% endfor %}
+               </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-3 col-6 mb-4">
+               <h6 class="mb-4">Social Links</h6>
+              
+                  <ul  class="list-unstyled footer-list">
+                     {% for social in footer_pages %}
+                         <li><a href="{{ social.url }}">{{ social.name }}</a></li>
+                     {% endfor %}
+                
+               </ul>
+            </div>
+
+            <div class="col-md-3 mb-4">
+               <h6 class="mb-4">Subscribe Newsletter</h6>
+               <form class="subscription"  method="post">
+                  {% csrf_token %}
+                  <div class="position-relative">
+                     <i class="ti-email email-icon"></i>
+                  {{subform.as_p}}
+                  </div>
+                  <button class="btn btn-primary btn-block rounded" type="submit">Subscribe now</button>
+               </form>
+            </div>
+         </div>
+         <div class="scroll-top">
+            <a href="javascript:void(0);" id="scrollTop"><i class="ti-angle-up"></i></a>
+         </div>
+         <div class="text-center">
+            <p class="content">&copy; <span id="copyrightYear"></span> - Design &amp; Develop By <a href="http://rebelsoftt.com/" target="_blank">Rebelsoftt.com</a></p>
+         </div>
+      </div>
+   </footer>
+           <!-- JS Plugins -->
+   <script src="{% static 'plugins/jQuery/jquery.min.js' %}"></script>
+   <script src="{% static 'plugins/bootstrap/bootstrap.min.js' %}" async></script>
+   <script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+
+   <!-- Main Script -->
+   <script src="{% static 'js/script.js' %}"></script> 
+<script>
+
+   const currentYear = new Date().getFullYear();
+   document.getElementById('copyrightYear').textContent = currentYear;
+
+           // Add this script to hide the alert messages after 5 seconds (5000 milliseconds)
+           $(document).ready(function() {
+            setTimeout(function() {
+                $(".alert").alert('close');
+            }, 5000); // 5000 milliseconds = 5 seconds
+        });
+</script>
+   {%block extrajs %}
+
+    {% endblock %}
+    </body>
+</html>
+
+

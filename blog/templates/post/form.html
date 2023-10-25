@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<!-- এখানে কনটেন্ট পরিবর্তনের কোড থাকবে -->
+<div class="col-lg-8  mb-5 mb-lg-0">
+    <div class="widget">
+        <h5 class="widget-title"><span>Create Post</span></h5>
+
+     </div>
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button class='btn btn-primary btn-block rounded' type="submit">Save</button>
+    </form>
+</div>
+{% include 'sidebar.html' %}
+{% endblock %}
+
+{%block extrajs %}
+
+{% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.1/tinymce.min.js"></script>
+<script>
+    tinymce.init({selector:'textarea'});
+</script>  {% endcomment %}
+
+{% endblock %}

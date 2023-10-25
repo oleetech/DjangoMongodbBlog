@@ -1,0 +1,17 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+<!-- এখানে কনটেন্ট পরিবর্তনের কোড থাকবে -->
+<div class="col-lg-8  mb-5 mb-lg-0">
+    {% for post in filter %}
+    <!-- Display post information -->
+    <h2> <a href="{% url 'post_view' post.title %}">{{ post.title }} </a></h2>
+{% empty %}
+    <p>No posts match your search.</p>
+{% endfor %} 
+</div>
+{% include 'sidebar.html' %}
+{% endblock %}
+
+
+
